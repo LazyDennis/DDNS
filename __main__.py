@@ -1,7 +1,7 @@
 import subprocess
 import re
 import config
-from config import PATTERN, COMMAND, TOKEN, DOMAIN, SUB_DOMAIN
+from config import PATTERN, COMMAND, TOKEN, DOMAIN, SUB_DOMAIN, PING_COMMAND
 from DnspodApi import DnspodApi
 
 def GetRemoteIpAddrs(_dnspod : DnspodApi,sub_domain: str, 
@@ -22,8 +22,8 @@ def GetLocalIpAddrs(_command, _pattern):
     return ipaddrs
 
 def TestIp(_target_ip : str):
-    TEST_COMMAND = r'ping ' + _target_ip[:_target_ip.rfind(':') + 1:] + '1'
-    ret, val = subprocess.getstatusoutput(TEST_COMMAND)
+    test_command = PING_COMMAND + _target_ip[:_target_ip.rfind(':') + 1:] + '1'
+    ret, val = subprocess.getstatusoutput(test_command)
     res = re.findall(r'Lost = (\d)',val)
     return res != '4'
     
@@ -31,6 +31,7 @@ def TestIp(_target_ip : str):
 def main():
     dnspod = DnspodApi(DOMAIN, TOKEN)
     local_ipaddrs = GetLocalIpAddrs(COMMAND, PATTERN)
+    remote_ipaddrs = []
     try:
         remote_ipaddrs = GetRemoteIpAddrs(dnspod, SUB_DOMAIN)
     except Exception as e:
