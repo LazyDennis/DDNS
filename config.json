@@ -1,0 +1,74 @@
+{
+    "ddns_conf": {
+        "domain": "",
+        "token": "",
+        "sub_domain": "",
+        "record_type": "AAAA",
+        "platform_setting": {
+            "win32": {
+                "local_ip_match_pattern": ".*(24.*10)",
+                "local_ethernet_device_name": "",
+                "local_ip_getcommand": "%windir%\\system32\\ipconfig.exe",
+                "local_ip_testcommand": "%windir%\\system32\\ping.exe -n 4"
+            },
+            "linux":{
+                "local_ip_match_pattern": ".*inet6 (24.*9)/128",
+                "local_ethernet_device_name": "ens160",
+                "local_ip_getcommand": "ip addr show dev",
+                "local_ip_testcommand": "ping -c 4"
+            }
+        }
+    },
+    "log_conf": {
+        "version": 1,
+        "disable_existing_loggers": true,
+        "formatters": {
+            "form_debug": {
+                "format": "%(asctime)s %(funcName)s: %(message)s"
+            },
+            "form_info": {
+                "format": "%(asctime)s: %(message)s"
+            },
+            "form_error": {
+                "format": "%(asctime)s %(funcName)s: %(message)s"
+            }
+        },
+        "handlers": {
+            "console_debug": {
+                "level": "DEBUG",
+                "filters": [],
+                "class": "logging.StreamHandler",
+                "formatter": "form_debug"
+            },
+            "console_info": {
+                "level": "INFO",
+                "filters": [],
+                "class": "logging.StreamHandler",
+                "formatter": "form_info"
+            },
+            "console_error": {
+                "level": "ERROR",
+                "filters": [],
+                "class": "logging.StreamHandler",
+                "formatter": "form_error"
+            }
+        },
+        "loggers": {
+            "ddns_debug": {
+                "handlers": ["console_debug"],
+                "level": "DEBUG",
+                "progagate": true
+            },
+            "ddns_info": {
+                "handlers": ["console_info"],
+                "level": "INFO",
+                "progagate": true
+            },
+            "ddns_error": {
+                "handlers": ["console_error"],
+                "level": "ERROR",
+                "progagate": true
+            }
+        }
+    }
+}
