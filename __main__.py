@@ -44,9 +44,12 @@ def main():
         GlobalLogger.info('No available local ip.')
 
 
-def GetConfig(config_file = r'.\config.json'):
+def GetConfig(config_file = None):
     import json, os, time
     from datetime import datetime
+    if config_file is None:
+        curr_path = __file__[:__file__.rfind('/') + 1:]
+        config_file = curr_path + 'config.json'
     ddns_config = None
     log_config = None
     if os.path.exists(config_file):
