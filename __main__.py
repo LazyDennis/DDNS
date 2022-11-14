@@ -45,7 +45,7 @@ def main():
 
 
 def GetConfig(config_file = None):
-    import json, os, time
+    import json, os
     from datetime import datetime
     if config_file is None:
         curr_path = __file__[:__file__.rfind('/') + 1:]
@@ -62,7 +62,10 @@ def GetConfig(config_file = None):
             log_config = config['log_conf']
         return ddns_config, log_config
     else:
-        print(datetime.now().strftime("%y/%m/%d %H:%M:%S.%f"), ": Config file ", config_file, " does not exists.\nProgram terminated.")
+        print(datetime.now().strftime("%y/%m/%d %H:%M:%S.%f")[:-3:], 
+             ": Config file ", config_file, " does not exists.")
+        print(datetime.now().strftime("%y/%m/%d %H:%M:%S.%f")[:-3:], 
+              ": Program terminated.")
         exit(0)
 
 def GetLogger(_log_config):
